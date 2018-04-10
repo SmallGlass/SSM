@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper标签要指定namespace属性，不然会报错，且mapper开发时设置为Mapper接口的全限定名-->
+<mapper namespace="com.kk.dao.UserloginMapper">
+    <select id="findUserByName" parameterType="java.lang.String" resultType="com.kk.pojo.User">
+        select * from user where username = #{username}
+    </select>
+    <insert id="saveUser" parameterType="com.kk.pojo.User">
+        insert into user(username,password,role) values(#{username},#{password},#{role})
+    </insert>
+    <delete id="removeUserByName" parameterType="java.lang.String">
+        delete from user where username=#{username}
+    </delete>
+    <update id="updateUser" parameterType="com.kk.pojo.User">
+        update user set password=#{password},role=#{role} where username=#{username}
+    </update>
+</mapper>
