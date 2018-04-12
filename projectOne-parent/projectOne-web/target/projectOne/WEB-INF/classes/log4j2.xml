@@ -24,7 +24,6 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-
          <Logger name="com.kk.dao" level="trace" additivity="true">
             <AppenderRef ref="running-log" /> </Logger>
 

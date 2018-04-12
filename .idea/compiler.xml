@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="common-utils" />
+        <module name="projectOne-mapper" />
+        <module name="projectOne-pojo" />
+        <module name="projectOne-service" />
+        <module name="projectOne-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common-parent" target="1.5" />
+      <module name="common-utils" target="1.5" />
+      <module name="maven-archiver (1)" target="1.5" />
+      <module name="maven-archiver (2)" target="1.5" />
+      <module name="maven-archiver (3)" target="1.5" />
+      <module name="maven-archiver (4)" target="1.5" />
+      <module name="maven-archiver (5)" target="1.5" />
+      <module name="projectOne-mapper" target="1.5" />
+      <module name="projectOne-parent" target="1.5" />
+      <module name="projectOne-pojo" target="1.5" />
+      <module name="projectOne-service" target="1.5" />
+      <module name="projectOne-web" target="1.6" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
