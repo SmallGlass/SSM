@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="common-mbg" />
         <module name="common-utils" />
         <module name="projectOne-mapper" />
         <module name="projectOne-pojo" />
@@ -14,6 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="common-mbg" target="1.5" />
       <module name="common-parent" target="1.5" />
       <module name="common-utils" target="1.5" />
       <module name="maven-archiver (1)" target="1.5" />

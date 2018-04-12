@@ -5,10 +5,10 @@
 	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- 引入bootstrap -->
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<!-- 引入JQuery  bootstrap.js-->
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="bootstrap/js/jquery-3.2.1.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<style type="text/css">
 	body{
 	   background: url(images/a.jpg)repeat;
@@ -31,13 +31,13 @@
 				<%--注意Url前面不能加斜杠，一旦加了斜杠，就会认为是根目录，就跳出项目目录了 --%>
 				<form class="form-horizontal" role="form" action="login" id="from1" method="post">
 				  <div class="form-group">
-				    <label for="firstname" class="col-sm-3 control-label">用户id</label>
+				    <label class="col-sm-3 control-label">用户id</label>
 				    <div class="col-sm-9">
 				      <input type="text" class="form-control" id="userID" placeholder="请输入名字" name="username">
 				    </div>
 				  </div>
 				  <div class="form-group">
-				    <label for="lastname" class="col-sm-3 control-label">密码</label>
+				    <label class="col-sm-3 control-label">密码</label>
 				    <div class="col-sm-9">
 				      <input type="password" class="form-control" id="password" placeholder="请输入密码" name="password">
 				    </div>

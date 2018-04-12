@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper标签要指定namespace属性，不然会报错，且mapper开发时设置为Mapper接口的全限定名-->
+<mapper namespace="com.kk.dao.NewsMapper">
+  <select id="findNewsByCriteria" parameterType="String" resultType="com.kk.pojo.News" statementType="STATEMENT">
+    <choose>
+      <when test="_parameter!= null">
+        select * from news ${criteria}
+      </when>
+    </choose>
+  </select>
+  <select id="findNewsByTypeId" parameterType="java.lang.Integer" resultType="com.kk.pojo.News">
+     select * from news,newstype where news.typeId=newstype.newsTypeId and news.typeId=#{typeid} order by publishDate desc limit 0,8
+  </select>
+</mapper>

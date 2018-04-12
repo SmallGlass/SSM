@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.dao.NewsMapper">
+  <resultMap id="BaseResultMap" type="com.kk.pojo.News">
+    <id column="newsId" jdbcType="INTEGER" property="newsId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="publishDate" jdbcType="TIMESTAMP" property="publishDate" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="typeId" jdbcType="INTEGER" property="typeId" />
+    <result column="click" jdbcType="INTEGER" property="click" />
+    <result column="isHead" jdbcType="TINYINT" property="isHead" />
+    <result column="isImage" jdbcType="TINYINT" property="isImage" />
+    <result column="imageName" jdbcType="VARCHAR" property="imageName" />
+    <result column="isHot" jdbcType="TINYINT" property="isHot" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.kk.pojo.News">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    newsId, title, publishDate, author, typeId, click, isHead, isImage, imageName, isHot
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <insert id="insertSelective" parameterType="com.kk.pojo.News">
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsId != null">
+        newsId,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="publishDate != null">
+        publishDate,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="typeId != null">
+        typeId,
+      </if>
+      <if test="click != null">
+        click,
+      </if>
+      <if test="isHead != null">
+        isHead,
+      </if>
+      <if test="isImage != null">
+        isImage,
+      </if>
+      <if test="imageName != null">
+        imageName,
+      </if>
+      <if test="isHot != null">
+        isHot,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsId != null">
+        #{newsId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="click != null">
+        #{click,jdbcType=INTEGER},
+      </if>
+      <if test="isHead != null">
+        #{isHead,jdbcType=TINYINT},
+      </if>
+      <if test="isImage != null">
+        #{isImage,jdbcType=TINYINT},
+      </if>
+      <if test="imageName != null">
+        #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null">
+        #{isHot,jdbcType=TINYINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kk.pojo.News">
+    update news
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        publishDate = #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        typeId = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="click != null">
+        click = #{click,jdbcType=INTEGER},
+      </if>
+      <if test="isHead != null">
+        isHead = #{isHead,jdbcType=TINYINT},
+      </if>
+      <if test="isImage != null">
+        isImage = #{isImage,jdbcType=TINYINT},
+      </if>
+      <if test="imageName != null">
+        imageName = #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null">
+        isHot = #{isHot,jdbcType=TINYINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where newsId = #{newsId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.dao.NewstypeMapper">
+  <resultMap id="BaseResultMap" type="com.kk.pojo.Newstype">
+    <id column="newsTypeId" jdbcType="INTEGER" property="newsTypeId" />
+    <result column="typeName" jdbcType="VARCHAR" property="typeName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    newsTypeId, typeName
+  </sql>
+  <insert id="insertSelective" parameterType="com.kk.pojo.Newstype">
+    insert into newstype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsTypeId != null">
+        newsTypeId,
+      </if>
+      <if test="typeName != null">
+        typeName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsTypeId != null">
+        #{newsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="typeName != null">
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kk.pojo.Newstype">
+    update newstype
+    <set>
+      <if test="typeName != null">
+        typeName = #{typeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where newsTypeId = #{newsTypeId,jdbcType=INTEGER}
+  </update>
+</mapper>
