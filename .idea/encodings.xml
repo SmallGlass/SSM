@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/common-mbg" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common-parent" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common-utils" charset="UTF-8" />
@@ -9,5 +9,6 @@
     <file url="file://$PROJECT_DIR$/projectOne-parent/projectOne-pojo" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/projectOne-parent/projectOne-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/projectOne-parent/projectOne-web" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

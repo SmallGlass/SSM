@@ -3,6 +3,11 @@ package com.kk.dto;
 /**
  * Created by yzb on 2018/4/6.
  */
+/**bootstrap只用传三个变量：
+    当前页，
+    总页，
+    页面大小
+    */
 public class Page {
     //当前页码,默认第一页
     private int curentNumber = 1;

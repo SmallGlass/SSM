@@ -13,7 +13,7 @@
 		<div>
 			<ul class="nav navbar-nav">
 				<c:forEach var="newsType" items="${newsTypeList}">
-					<li><a href="foreground/newsList?typeId=${newsType.newsTypeId }">${newsType.typeName }</a></li>
+					<li><a href="newsList?typeId=${newsType.newsTypeId }">${newsType.typeName }</a></li>
 				</c:forEach>
 			</ul>
 		</div>

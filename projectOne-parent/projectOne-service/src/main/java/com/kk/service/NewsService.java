@@ -10,4 +10,6 @@ import java.util.List;
 public interface NewsService {
     List<News> findNewsByCriteria(String criteria);
     List<News> findNewsByTypeId(Integer typeId);
+    List<News> findNewsAllByTypeId(int typeId,int offset,int pageSize);
+    int countNewsAllByTypeId(int typeId);
 }

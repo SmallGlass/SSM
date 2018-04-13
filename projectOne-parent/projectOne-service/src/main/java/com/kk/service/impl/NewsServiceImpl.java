@@ -22,4 +22,12 @@ public class NewsServiceImpl implements NewsService {
     public List<News> findNewsByTypeId(Integer typeId) {
         return newsMapper.findNewsByTypeId(typeId);
     }
+
+    public List<News> findNewsAllByTypeId(int typeId, int offset, int pageSize) {
+        return newsMapper.findNewsAllByTypeId(typeId,offset,pageSize);
+    }
+
+    public int countNewsAllByTypeId(int typeId) {
+        return newsMapper.countNewsAllByTypeId(typeId);
+    }
 }

@@ -1,15 +1,22 @@
 package com.kk.controller;
 
+import com.kk.dto.Page;
+import com.kk.love.ResponseUtil;
 import com.kk.love.StringUtil;
 import com.kk.pojo.News;
 import com.kk.pojo.NewsType;
 import com.kk.service.NewsService;
 import com.kk.service.NewsTypeService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,5 +54,34 @@ public class ForeGroundController {
         model.addAttribute("newestNewsList",newestNewsList);
         model.addAttribute("allIndexNewsList",allIndexNewsList);
         return "foreground/index";
+    }
+    @RequestMapping(value = "/newsList", method = {RequestMethod.GET})
+    public String newsListUI(Model model){
+        List<News> hotSpotNewsList =newsService.findNewsByCriteria(" where isHot=1 order by publishDate desc limit 0,8");
+        List<News> newestNewsList =newsService.findNewsByCriteria(" order by publishDate desc limit 0,8");
+        model.addAttribute("mainPage","../newsList.jsp");
+        model.addAttribute("hotSpotNewsList",hotSpotNewsList);
+        model.addAttribute("newestNewsList",newestNewsList);
+        return "foreground/common/newsTemp";
+    }
+    @RequestMapping(value = "/newsList", method = {RequestMethod.POST})
+    public String newsList(HttpServletResponse response,Integer typeId, @RequestParam(value = "pageIndex", required = false)Integer pageIndex)throws Exception{
+        Page page=new Page();
+        int count=newsService.countNewsAllByTypeId(typeId);
+        List<News> newsList=null;
+        if(pageIndex==null){
+            newsList=newsService.findNewsAllByTypeId(typeId,0,page.getSize());
+            page.setCurentNumber(1);
+        }else{
+            newsList=newsService.findNewsAllByTypeId(typeId,(pageIndex-1)*page.getSize(),page.getSize());
+            page.setCurentNumber(pageIndex);
+        }
+        page.setLastNumber((count-1)/page.getSize()+1);
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = JSONArray.fromObject(newsList);
+        result.put("list",jsonArray);
+        result.put("page",page);
+        ResponseUtil.write(response, result);
+        return null;
     }
 }
