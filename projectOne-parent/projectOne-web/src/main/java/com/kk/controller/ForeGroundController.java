@@ -1,6 +1,7 @@
 package com.kk.controller;
 
 import com.kk.dto.Page;
+import com.kk.love.JsonDateValueProcessor;
 import com.kk.love.ResponseUtil;
 import com.kk.love.StringUtil;
 import com.kk.pojo.News;
@@ -9,6 +10,7 @@ import com.kk.service.NewsService;
 import com.kk.service.NewsTypeService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,12 +59,15 @@ public class ForeGroundController {
         return "foreground/index";
     }
     @RequestMapping(value = "/newsList", method = {RequestMethod.GET})
-    public String newsListUI(Model model){
+    public String newsListUI(Model model,Integer typeId){
+        List<NewsType> newsTypeList =newsTypeService.findNewsTypeAll();
         List<News> hotSpotNewsList =newsService.findNewsByCriteria(" where isHot=1 order by publishDate desc limit 0,8");
         List<News> newestNewsList =newsService.findNewsByCriteria(" order by publishDate desc limit 0,8");
+        model.addAttribute("newsTypeList",newsTypeList);
         model.addAttribute("mainPage","../newsList.jsp");
         model.addAttribute("hotSpotNewsList",hotSpotNewsList);
         model.addAttribute("newestNewsList",newestNewsList);
+        model.addAttribute("typeId",typeId);
         return "foreground/common/newsTemp";
     }
     @RequestMapping(value = "/newsList", method = {RequestMethod.POST})
@@ -77,8 +83,10 @@ public class ForeGroundController {
             page.setCurentNumber(pageIndex);
         }
         page.setLastNumber((count-1)/page.getSize()+1);
+        JsonConfig jConfig = new JsonConfig();
+        jConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
         JSONObject result = new JSONObject();
-        JSONArray jsonArray = JSONArray.fromObject(newsList);
+        JSONArray jsonArray = JSONArray.fromObject(newsList,jConfig);
         result.put("list",jsonArray);
         result.put("page",page);
         ResponseUtil.write(response, result);

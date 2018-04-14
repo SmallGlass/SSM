@@ -1,5 +1,7 @@
 package com.kk.pojo;
 
+
+
 import java.util.Date;
 
 public class News {

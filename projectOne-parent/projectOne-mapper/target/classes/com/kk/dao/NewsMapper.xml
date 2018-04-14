@@ -13,12 +13,12 @@
     </choose>
   </select>
   <select id="findNewsByTypeId" parameterType="java.lang.Integer" resultType="com.kk.pojo.News">
-     select * from news,newstype where news.typeId=newstype.newsTypeId and news.typeId=#{typeid} order by publishDate desc limit 0,8
+     select * from news,newstype where news.typeId=newstype.newsTypeId and news.typeId=#{typeId} order by publishDate desc limit 0,8
   </select>
   <select id="findNewsAllByTypeId"  resultType="com.kk.pojo.News">
-    select * from news,newstype where news.typeId=newstype.newsTypeId and news.typeId=#{typeid} order by publishDate desc #{offset},#{pageSize}
+    select * from news,newstype where news.typeId=newstype.newsTypeId and news.typeId=#{typeId} order by publishDate desc limit #{offset},#{pageSize}
   </select>
   <select id="countNewsAllByTypeId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select count(*) from news where typeId=#{typeid}
+    select count(*) from news where typeId=#{typeId}
   </select>
 </mapper>

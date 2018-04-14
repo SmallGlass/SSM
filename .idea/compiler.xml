@@ -15,7 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="common-mbg" target="1.5" />
+      <module name="common-mbg" target="1.7" />
       <module name="common-parent" target="1.5" />
       <module name="common-utils" target="1.5" />
       <module name="maven-archiver (1)" target="1.5" />
