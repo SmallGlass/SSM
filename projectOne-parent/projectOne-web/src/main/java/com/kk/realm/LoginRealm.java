@@ -5,11 +5,14 @@ import com.kk.pojo.Role;
 import com.kk.pojo.User;
 import com.kk.service.RoleService;
 import com.kk.service.UserloginService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -59,32 +62,44 @@ public class LoginRealm extends AuthorizingRealm{
 
     /**
      * 在这个方法中，进行身份验证
-     *         login时调用
+     *    login时调用
      */
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+       //获取基于用户名和密码的令牌
+        //实际上这个authcToken是从LoginController里面currentUser.login(token)传过来的
+        //两个token的引用都是一样的，本例中是：org.apache.shiro.authc.UsernamePasswordToken@33799a1e
         //用户名
         String username = (String) token.getPrincipal();
-        //密码
-        String password = new String((char[])token.getCredentials());
 
-        User userlogin = null;
+        User user = null;
         try {
-            userlogin = userloginService.findUserByName(username);
+            user = userloginService.findUserByName(username);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (userlogin == null) {
-            //没有该用户名
-            throw new UnknownAccountException();
-        } else if (!password.equals(userlogin.getPassword())) {
-            //密码错误
-            throw new IncorrectCredentialsException();
+        if(user!=null){
+            /**
+             * get from database
+             * Paremeter one: username
+             * Paremeter two: password
+             * Paremeter three: nick name;
+             */
+            AuthenticationInfo aInfo = new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),getName());
+            this.setAuthenticationSession(user.getUsername());
+            return aInfo;
         }
+        return null;
 
-        //身份验证通过,返回一个身份信息
-        AuthenticationInfo aInfo = new SimpleAuthenticationInfo(username,password,getName());
-
-        return aInfo;
+    }
+    /**
+     * 将一些数据放到ShiroSession中，以便于其它地方使用
+     * 比如Controller里面，使用时直接用HttpSession.getAttribute(key)就可以取到
+     */
+    private void setAuthenticationSession(Object value){
+        Subject currentUser = SecurityUtils.getSubject();
+        if(null != currentUser){
+            Session session = currentUser.getSession();
+            session.setAttribute("currentUser", value);
+        }
     }
 }

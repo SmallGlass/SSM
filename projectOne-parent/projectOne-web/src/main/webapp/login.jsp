@@ -42,6 +42,13 @@
 				      <input type="password" class="form-control" id="password" placeholder="请输入密码" name="password">
 				    </div>
 				  </div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">验证码</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="captcha" placeholder="请输入验证码" name="captcha">
+							<img style="cursor:pointer;" src="captcha.jsp" onClick="this.src='captcha.jsp?time'+Math.random();"/><br/>
+						</div>
+					</div>
 				  <%--<div class="form-group">--%>
 				    <%--<div class="col-sm-offset-2 col-sm-10">--%>
 				      <%--<div class="checkbox">--%>
@@ -57,10 +64,15 @@
 				      <%--</div>--%>
 				    <%--</div>--%>
 				  <%--</div>--%>
+					<div class="form-group">
+						<div class="col-sm-offset-6 col-sm-10">
+							<label style="color:red; font-size:18px;">${message_login}</label>
+						</div>
+					</div>
 				  <div class="form-group pull-right" style="margin-right: 15px;">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <button type="submit" class="btn btn-default btn-info">登录</button>
-				    </div>
+				      <div class="col-sm-offset-2 col-sm-10">
+						  <button type="submit" class="btn btn-default btn-info">登录</button>
+					  </div>
 				  </div>
 				</form>
 			</div>
