@@ -101,6 +101,10 @@
             <version>2.4</version>
             <classifier>jdk15</classifier>
         </dependency>
+        <dependency>
+        <groupId>org.apache.shiro</groupId>
+        <artifactId>shiro-ehcache</artifactId>
+        </dependency>
         <!--需要使用log4j2的AsyncLogger需要包含disruptor-->
         <!--<dependency>
             <groupId>com.lmax</groupId>

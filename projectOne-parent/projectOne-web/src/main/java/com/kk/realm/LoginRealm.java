@@ -13,7 +13,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Component;
+import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.Resource;
 import java.util.HashSet;
@@ -23,7 +23,6 @@ import java.util.Set;
  * Created by Jacey on 2017/6/30.
  */
 
-@Component
 public class LoginRealm extends AuthorizingRealm{
 
     @Resource(name = "userloginServiceImpl")
@@ -84,7 +83,8 @@ public class LoginRealm extends AuthorizingRealm{
              * Paremeter two: password
              * Paremeter three: nick name;
              */
-            AuthenticationInfo aInfo = new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),getName());
+            SimpleAuthenticationInfo aInfo = new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),getName());
+            aInfo.setCredentialsSalt(ByteSource.Util.bytes(user.getUsername()));
             this.setAuthenticationSession(user.getUsername());
             return aInfo;
         }

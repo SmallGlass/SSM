@@ -15,7 +15,38 @@
 
     <!--组件扫描器-->
     <context:component-scan base-package="com.kk.realm" />
-
+    <!-- 缓存管理器 使用Ehcache实现 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>
+    <!-- 凭证匹配器 -->
+    <bean id="credentialsMatcher" class="com.kk.realm.RetryLimitHashedCredentialsMatcher">
+        <constructor-arg ref="cacheManager"/>
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="2"/>
+        <property name="storedCredentialsHexEncoded" value="true"/>
+    </bean>
+    <!-- Realm实现 -->
+    <bean id="loginRealm" class="com.kk.realm.LoginRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="authenticationCache"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorizationCache"/>
+    </bean>
+    <!-- 配置securityManager -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- 配置自定义Realm -->
+        <!-- 指定Shiro验证用户登录的类为自定义的Realm（若有多个Realm，可用[realms]属性代替） -->
+        <!-- loginRealm 使用扫描器扫描注册成功了-->
+        <property name="realm" ref="loginRealm" />
+        <!-- Shiro默认会使用Servlet容器的Session，此时修改超时时间的话，可以修改web.xml或者自定义的MyRealm
+        而若想使用Shiro原生Session则可以设置sessionMode属性为native，此时修改超时时间则只能修改MyRealm
+        -->
+        <!-- <property name="sessionMode" value="native"/> -->
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
     <!-- shiro过滤器bean，id要和web.xml中filter-name一致 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager" />
@@ -62,17 +93,8 @@
     </bean>
 
 
-    <!-- 配置securityManager -->
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <!-- 配置自定义Realm -->
-        <!-- 指定Shiro验证用户登录的类为自定义的Realm（若有多个Realm，可用[realms]属性代替） -->
-        <!-- loginRealm 使用扫描器扫描注册成功了-->
-        <property name="realm" ref="loginRealm" />
-        <!-- Shiro默认会使用Servlet容器的Session，此时修改超时时间的话，可以修改web.xml或者自定义的MyRealm
-        而若想使用Shiro原生Session则可以设置sessionMode属性为native，此时修改超时时间则只能修改MyRealm
-        -->
-        <!-- <property name="sessionMode" value="native"/> -->
-    </bean>
+
+
     <!-- 生命周期 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 

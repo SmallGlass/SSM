@@ -5,6 +5,7 @@ import com.kk.pojo.User;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -28,6 +29,11 @@ public class LoginController {
     //登录表单处理
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
     public String login(User user, HttpServletRequest request) throws Exception {
+        //插入密码的算法
+        /*SimpleHash hash = new SimpleHash("md5", "123", "admin", 2);
+        String encodedPassword = hash.toHex();
+        System.out.println(encodedPassword);
+        */
         String rand = (String)request.getSession().getAttribute("rand");
         String captcha = WebUtils.getCleanParam(request, "captcha");
         if(!StringUtils.equals(rand, captcha)){
@@ -45,16 +51,16 @@ public class LoginController {
             //每个Realm都能在必要时对提交的AuthenticationTokens作出反应
             //所以这一步在调用login(token)方法时，它会走到MyRealm.doGetAuthenticationInfo()方法中，具体验证方式详见此方法
             subject.login(token);
+        }catch(ExcessiveAttemptsException eae){
+            request.setAttribute("message_login", "用户名或密码错误次数过多");
         }catch(UnknownAccountException uae){
             request.setAttribute("message_login", "用户名/密码不正确");
         }catch(IncorrectCredentialsException ice){
             request.setAttribute("message_login", "用户名/密码不正确");
         }catch(LockedAccountException lae){
             request.setAttribute("message_login", "账户已锁定");
-        }catch(ExcessiveAttemptsException eae){
-            request.setAttribute("message_login", "用户名或密码错误次数过多");
         }catch(AuthenticationException ae){
-            ae.printStackTrace();
+           // ae.printStackTrace();
             request.setAttribute("message_login", "用户名或密码不正确");
         }
         //验证是否登录成功

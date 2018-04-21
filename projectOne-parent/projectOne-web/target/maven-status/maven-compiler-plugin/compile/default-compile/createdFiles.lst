@@ -3,4 +3,5 @@ com\kk\controller\AdminController.class
 com\kk\controller\LoginController.class
 com\kk\controller\ForeGroundController.class
 com\kk\realm\LoginRealm.class
+com\kk\realm\RetryLimitHashedCredentialsMatcher.class
 com\kk\dto\Page.class
